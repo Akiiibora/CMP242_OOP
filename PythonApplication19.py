@@ -1,14 +1,16 @@
 
 
 
-#class Company:
-  # def __init__(self,name,base_id,):
-   # self.name=name                                #CompanID company deki þirketlerin temel baþlangýç ID deðeri 
-    #self.base_id= base_id
-                                                   #15,18,19
+class Company:
+   def __init__ (self,name,base_id,employees):
+       self.name=name                               
+       self.base_id= base_id
+       self.employees =employees if employees is not None else[]                                            
 
-
- 
+Apple = Company("Apple",2000,[])
+Samsung = Company("Samsung",4000,[])
+Valve = Company("Valve",6000,[])
+companies ={"Apple":Apple,"Samsung":Samsung,"Valve": Valve}
 
 
 class ID:
@@ -48,32 +50,41 @@ class ID:
 
         # Silinen ID'yi free_ids'e ekle
         self.free_ids[base_id].append(Move_ID)
-
+ID_system = ID()  # sýnýftan bir obje oluþturduk
 #class fire(Company,Employee):
 
-#class hire(Company,Employee):
-
-
-ID_system = ID()  # sýnýftan bir obje oluþturduk
+    
 
 class Employee:
-    def __init__(self,ID_system,base_id,name,age,position,Company):
-         self.name = name
-         self.age = age 
-         self.position = position
-         self.ID_Emp = ID_system.create_id(3000)
+    def __init__(self):
+         self.name = None
+         self.age = None 
+         self.position = None
+         self.company =None
 
-E1 = Employee(ID_system,2000,"Ahmet",30,"Manager",[None])
+    def hire(self,companies,ID_system):
+        
+         company_choice = input("which company do you want add employee? (Apple/Samsung/Valve): ")
 
-#Apple = Company("Apple",2000)
-#Samsung = Company("Samsung",4000)
-#Valve = Company("Valve",6000)
-#print(Apple)
-#print(Samsung
+         if company_choice not in companies:
+            print("You have to choose one of this three!")
+            return self.hire(companies,ID_system) 
+        
+            
+            
+         selected_company = companies[company_choice]
+         self.company= selected_company
+         selected_company.employees.append(self)
+
+         self.name= input("Enter employee's name: ")
+         self.age =input("Enter employee's age: ")
+         self.position = input("Enter employee's position: ")
+         
+         self.ID_Emp =ID_system.create_id(selected_company.base_id)
+         print(f"Hired as a {self.position} which is name of {self.name} hired at {selected_company.name} with ID {self.ID_Emp}")
+E1= Employee()
+E1.hire(companies,ID_system)
+
 print(E1.ID_Emp)
-print(ID_system.create_id(3000))   
-print(ID_system.create_id(3000))   
-ID_system.remove_id(3000,3001)
-print(ID_system.last_ID) 
-print(ID_system.free_ids)
+
 
